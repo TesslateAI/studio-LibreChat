@@ -69,7 +69,7 @@ class ChatGPTClient extends BaseClient {
     const { isUnofficialChatGptModel } = this;
 
     // Davinci models have a max context length of 4097 tokens.
-    this.maxContextTokens = this.options.maxContextTokens || (isChatGptModel ? 4095 : 4097);
+    this.maxContextTokens = this.options.maxContextTokens || (isChatGptModel ? 32768   : 4097);
     // I decided to reserve 1024 tokens for the response.
     // The max prompt tokens is determined by the max context tokens minus the max response tokens.
     // Earlier messages will be dropped until the prompt is within the limit.

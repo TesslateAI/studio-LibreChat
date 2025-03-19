@@ -1,5 +1,10 @@
 import { memo, useRef, useMemo, useEffect, useState } from 'react';
+import { FiBookOpen, FiSearch, FiTerminal, FiZap } from 'react-icons/fi';
 import { useRecoilState, useRecoilValue } from 'recoil';
+import ForgePanel from "./Studio/ForgePanel";
+import PromptLibrary from './Studio/PromptLibrary';
+import GithubModal from './Studio/GithubModal';
+
 import {
   supportsFiles,
   mergeFileConfig,
@@ -37,6 +42,13 @@ import Mention from './Mention';
 import store from '~/store';
 
 const ChatForm = ({ index = 0 }) => {
+  const [showPromptLibrary, setShowPromptLibrary] = useState(false);
+  const [showDeepResearch, setShowDeepResearch] = useState(false);
+  const [showForgeCLI, setShowForgeCLI] = useState(false);
+  const [showGitHubModal, setShowGitHubModal] = useState(false);
+  const [githubRepo, setGithubRepo] = useState('');
+  const [selectedBranch, setSelectedBranch] = useState('main');
+
   const submitButtonRef = useRef<HTMLButtonElement>(null);
   const textAreaRef = useRef<HTMLTextAreaElement | null>(null);
   useQueryParams({ textAreaRef });
@@ -146,8 +158,9 @@ const ChatForm = ({ index = 0 }) => {
   const isUploadDisabled: boolean = endpointFileConfig?.disabled ?? false;
 
   const baseClasses = cn(
-    'md:py-3.5 m-0 w-full resize-none py-[13px] bg-surface-tertiary placeholder-black/50 dark:placeholder-white/50 [&:has(textarea:focus)]:shadow-[0_2px_6px_rgba(0,0,0,.05)]',
-    isCollapsed ? 'max-h-[52px]' : 'max-h-[65vh] md:max-h-[75vh]',
+    'm-0 w-full resize-none bg-[#424242] px-3 py-3 text-gray-200 placeholder-gray-400',
+    'rounded-md border border-[#424242] focus:outline-none focus:ring-0',
+    isCollapsed ? 'max-h-[52px]' : 'max-h-[400px]',
   );
 
   const uploadActive = endpointSupportsFiles && !isUploadDisabled;
@@ -156,15 +169,16 @@ const ChatForm = ({ index = 0 }) => {
     : `pl-${uploadActive ? '12' : '4'} pr-12`;
 
   return (
-    <form
-      onSubmit={methods.handleSubmit((data) => submitMessage(data))}
-      className={cn(
-        'mx-auto flex flex-row gap-3 pl-2 transition-all duration-200 last:mb-2',
-        maximizeChatSpace ? 'w-full max-w-full' : 'md:max-w-2xl xl:max-w-3xl',
-      )}
-    >
-      <div className="relative flex h-full flex-1 items-stretch md:flex-col">
-        <div className="flex w-full items-center">
+    <>
+      <form
+        onSubmit={methods.handleSubmit((data) => submitMessage(data))}
+        style={{ backgroundColor: '#424242' }}
+        className={cn(
+          'relative mx-auto flex flex-col justify-center space-y-2 rounded-xl p-3 shadow-sm',
+          maximizeChatSpace ? 'w-full max-w-full' : 'md:max-w-2xl xl:max-w-3xl',
+        )}
+      >
+        <div className="flex items-end">
           {showPlusPopover && !isAssistantsEndpoint(endpoint) && (
             <Mention
               setShowMentionPopover={setShowPlusPopover}
@@ -182,12 +196,13 @@ const ChatForm = ({ index = 0 }) => {
               textAreaRef={textAreaRef}
             />
           )}
-          <PromptsCommand index={index} textAreaRef={textAreaRef} submitPrompt={submitPrompt} />
-          <div className="transitional-all relative flex w-full flex-grow flex-col overflow-hidden rounded-3xl bg-surface-tertiary text-text-primary duration-200">
-            <TemporaryChat
-              isTemporaryChat={isTemporaryChat}
-              setIsTemporaryChat={setIsTemporaryChat}
-            />
+
+          <div className="mr-2 flex flex-col justify-end">
+            <PromptsCommand index={index} textAreaRef={textAreaRef} submitPrompt={submitPrompt} />
+          </div>
+
+          <div className="relative flex flex-1 flex-col overflow-hidden rounded-md bg-[#343541] text-gray-200">
+            <TemporaryChat isTemporaryChat={isTemporaryChat} setIsTemporaryChat={setIsTemporaryChat} />
             <TextareaHeader addedConvo={addedConvo} setAddedConvo={setAddedConvo} />
             <FileFormWrapper disableInputs={disableInputs}>
               {endpoint && (
@@ -219,19 +234,16 @@ const ChatForm = ({ index = 0 }) => {
                     tabIndex={0}
                     data-testid="text-input"
                     rows={1}
+                    placeholder="Ask anything..."
                     onFocus={() => isCollapsed && setIsCollapsed(false)}
                     onClick={() => isCollapsed && setIsCollapsed(false)}
-                    style={{ height: 44, overflowY: 'auto' }}
-                    className={cn(
-                      baseClasses,
-                      speechClass,
-                      removeFocusRings,
-                      'transition-[max-height] duration-200',
-                    )}
+                    style={{ overflowY: 'auto' }}
+                    className={cn(baseClasses, speechClass, removeFocusRings)}
                   />
                 </>
               )}
             </FileFormWrapper>
+
             {SpeechToText && (
               <AudioRecorder
                 isRTL={isRTL}
@@ -244,13 +256,8 @@ const ChatForm = ({ index = 0 }) => {
             )}
             {TextToSpeech && automaticPlayback && <StreamAudio index={index} />}
           </div>
-          <div
-            className={cn(
-              'mb-[5px] ml-[8px] flex flex-col items-end justify-end',
-              isRTL && 'order-first mr-[8px]',
-            )}
-            style={{ alignSelf: 'flex-end' }}
-          >
+
+          <div className="ml-2 flex items-end">
             {(isSubmitting || isSubmittingAdded) && (showStopButton || showStopAdded) ? (
               <StopButton stop={handleStopGenerating} setShowStopButton={setShowStopButton} />
             ) : (
@@ -264,8 +271,61 @@ const ChatForm = ({ index = 0 }) => {
             )}
           </div>
         </div>
-      </div>
-    </form>
+
+        {/* Buttons with icon + text, circular style, gray text */}
+        <div className="mt-3 flex flex-wrap items-center justify-center gap-3">
+          <button
+            onClick={() => setShowPromptLibrary(true)}
+            className="flex items-center gap-2 rounded-full bg-[#424242] px-3 py-1 text-sm text-gray-300 hover:bg-[#999696]"
+            title="Prompt Library"
+          >
+            <FiBookOpen />
+            <span>Prompt Library</span>
+          </button>
+          <button
+            onClick={() => setShowDeepResearch(true)}
+            className="flex items-center gap-2 rounded-full bg-[#424242] px-3 py-1 text-sm text-gray-300 hover:bg-[#999696]"
+            title="Deep Research"
+          >
+            <FiSearch />
+            <span>Deep Research</span>
+          </button>
+          <button
+            onClick={() => setShowForgeCLI(true)}
+            className="flex items-center gap-2 rounded-full bg-[#424242] px-3 py-1 text-sm text-gray-300 hover:bg-[#999696]"
+            title="Forge CLI"
+          >
+            <FiTerminal />
+            <span>Forge CLI</span>
+          </button>
+          <button
+            onClick={() => setShowGitHubModal(true)}
+            className="flex items-center gap-2 rounded-full bg-[#424242] px-3 py-1 text-sm text-gray-300 hover:bg-[#999696]"
+            title="Github"
+          >
+            <FiZap />
+            <span>Github</span>
+          </button>
+
+        </div>
+      </form>
+
+      {showPromptLibrary && <PromptLibrary isOpen={showPromptLibrary} onClose={() => setShowPromptLibrary(false)} />}
+      {/* {showDeepResearch && <DeepResearch onClose={() => setShowDeepResearch(false)} />} */}
+      {showForgeCLI && <ForgePanel isOpen={showForgeCLI} onClose={() => setShowForgeCLI(false)} />}
+      {showGitHubModal && (<GithubModal showGitHubModal={showGitHubModal}
+        setShowGitHubModal={setShowGitHubModal}
+        githubRepo={githubRepo}
+        setGithubRepo={setGithubRepo}
+        selectedBranch={selectedBranch}
+        setSelectedBranch={setSelectedBranch}
+      />
+      )}
+
+
+
+
+    </>
   );
 };
 

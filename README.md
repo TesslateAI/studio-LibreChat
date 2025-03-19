@@ -3,7 +3,7 @@
     <img src="client/public/assets/logo.svg" height="256">
   </a>
   <h1 align="center">
-    <a href="https://librechat.ai">LibreChat</a>
+    <a href="https://tesslate.pages.dev/">Tesslate v0.0.0</a>
   </h1>
 </p>
 

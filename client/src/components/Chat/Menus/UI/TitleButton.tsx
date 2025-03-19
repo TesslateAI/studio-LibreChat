@@ -10,7 +10,7 @@ export default function TitleButton({ primaryText = '', secondaryText = '' }) {
   return (
     <Trigger asChild>
       <button
-        className="group flex cursor-pointer items-center gap-2 rounded-lg px-3 py-1.5 text-lg font-medium transition-colors duration-200 hover:bg-surface-hover radix-state-open:bg-surface-hover"
+        className="group flex cursor-pointer items-center justify-between gap-2 rounded-lg dark:bg-gray-800 px-3 py-1.5 text-lg font-medium text-white transition-colors duration-200 hover:bg-gray-800 radix-state-open:bg-gray-800"
         aria-label={localize('com_ui_endpoint_menu')}
         aria-expanded={isExpanded}
         role="combobox"
@@ -18,11 +18,11 @@ export default function TitleButton({ primaryText = '', secondaryText = '' }) {
         aria-controls="llm-endpoint-menu"
         onClick={() => setIsExpanded(!isExpanded)}
       >
-        <div>
-          <span className="text-text-primary"> {primaryText} </span>
-          {!!secondaryText && <span className="text-token-text-secondary">{secondaryText}</span>}
+        <div className="flex items-center gap-2">
+          <span className="text-white"> {primaryText} </span>
+          {!!secondaryText && <span className="text-white">{secondaryText}</span>}
         </div>
-        <ChevronDown className="text-token-text-secondary size-4" />
+        <ChevronDown className="text-white size-4" />
       </button>
     </Trigger>
   );

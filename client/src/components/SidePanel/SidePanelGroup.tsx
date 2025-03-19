@@ -114,22 +114,7 @@ const SidePanelGroup = ({
             </ResizablePanel>
           </>
         )}
-        {!hideSidePanel && interfaceConfig.sidePanel === true && (
-          <SidePanel
-            panelRef={panelRef}
-            minSize={minSize}
-            setMinSize={setMinSize}
-            isCollapsed={isCollapsed}
-            setIsCollapsed={setIsCollapsed}
-            collapsedSize={collapsedSize}
-            setCollapsedSize={setCollapsedSize}
-            fullCollapse={fullCollapse}
-            setFullCollapse={setFullCollapse}
-            defaultSize={currentLayout[currentLayout.length - 1]}
-            hasArtifacts={artifacts != null}
-            interfaceConfig={interfaceConfig}
-          />
-        )}
+        
       </ResizablePanelGroup>
       <button
         aria-label="Close right side panel"

@@ -130,7 +130,7 @@ export default function Landing({ Header }: { Header?: ReactNode }) {
           </div> */}
           </div>
         ) : (
-          <h2 className="mb-5 max-w-[75vh] px-12 text-center text-lg font-medium dark:text-white md:px-0 md:text-2xl">
+          <h2 className="mb-5 max-w-[75vh] px-12 text-center text-lg font-medium dark:text-black md:px-0 md:text-2xl">
             {getWelcomeMessage()}
           </h2>
         )}

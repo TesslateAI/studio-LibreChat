@@ -87,21 +87,22 @@ export default function Footer({ className }: { className?: string }) {
     <div
       className={
         className ??
-        'relative flex items-center justify-center gap-2 px-2 py-2 text-center text-xs text-text-primary md:px-[60px]'
+        'relative flex items-center justify-center gap-2 px-2 py-2 text-center text-xs text-black md:px-[60px]'
       }
       role="contentinfo"
     >
-      {footerElements.map((contentRender, index) => {
-        const isLastElement = index === footerElements.length - 1;
-        return (
-          <React.Fragment key={`footer-element-${index}`}>
-            {contentRender}
-            {!isLastElement && (
-              <div key={`separator-${index}`} className="h-2 border-r-[1px] border-border-medium" />
-            )}
-          </React.Fragment>
-        );
-      })}
+      <a
+        className="text-black underline"
+        href="https://tesslate.pages.dev/"
+        target="_blank"
+        rel="noreferrer"
+      >
+        Tesslate Studio v{process.env.STUDIO_APP_VERSION || '0.0.0'}
+      </a>
+      <span className="text-black">
+        Studio can make mistakes. Check important info.
+      </span>
     </div>
   );
+  
 }
