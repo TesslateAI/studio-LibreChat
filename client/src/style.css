@@ -14,12 +14,12 @@
   --gray-400: #999696;
   --gray-500: #595959;
   --gray-600: #424242;
-  --gray-700: #2f2f2f;
-  --gray-800: #212121;
-  --gray-850: #171717;
+  --gray-700: #4e4946; /* style for message bar */
+  --gray-800: #d5ccc5;
+  --gray-850: #4e4946;
   --gray-900: #0d0d0d;
   --green-50: #ecfdf5;
-  --green-100: #d1fae5;
+  --green-100: #161918;
   --green-200: #a7f3d0;
   --green-300: #6ee7b7;
   --green-400: #34d399;
@@ -1494,22 +1494,46 @@ html {
   color: rgba(64, 65, 79, var(--tw-text-opacity));
 }
 .dark .dark\:prose-invert {
-  --tw-prose-body: var(--tw-prose-invert-body);
-  --tw-prose-headings: var(--tw-prose-invert-headings);
-  --tw-prose-lead: var(--tw-prose-invert-lead);
-  --tw-prose-links: var(--tw-prose-invert-links);
-  --tw-prose-bold: var(--tw-prose-invert-bold);
-  --tw-prose-counters: var(--tw-prose-invert-counters);
-  --tw-prose-bullets: var(--tw-prose-invert-bullets);
-  --tw-prose-hr: var(--tw-prose-invert-hr);
-  --tw-prose-quotes: var(--tw-prose-invert-quotes);
-  --tw-prose-quote-borders: var(--tw-prose-invert-quote-borders);
-  --tw-prose-captions: var(--tw-prose-invert-captions);
-  --tw-prose-code: var(--tw-prose-invert-code);
-  --tw-prose-pre-code: var(--tw-prose-invert-pre-code);
-  --tw-prose-pre-bg: var(--tw-prose-invert-pre-bg);
-  --tw-prose-th-borders: var(--tw-prose-invert-th-borders);
-  --tw-prose-td-borders: var(--tw-prose-invert-td-borders);
+  --tw-prose-body: #4E4E4E;
+  --tw-prose-headings: #4E4E4E;
+  --tw-prose-lead: #4E4E4E;
+  --tw-prose-links: #4E4E4E;
+  --tw-prose-bold: #4E4E4E;
+  --tw-prose-counters: #4E4E4E;
+  --tw-prose-bullets: #4E4E4E;
+  --tw-prose-hr: #4E4E4E;
+  --tw-prose-quotes: #4E4E4E;
+  --tw-prose-quote-borders: #4E4E4E;
+  --tw-prose-captions: #4E4E4E;
+  --tw-prose-code: #4E4E4E;
+  --tw-prose-pre-code: #4E4E4E;
+  --tw-prose-pre-bg: #4E4E4E;
+  --tw-prose-th-borders: #4E4E4E;
+  --tw-prose-td-borders: #4E4E4E;
+}
+.dark .markdown {
+  color: #4E4E4E;
+}
+
+.dark .prose {
+  color: #4E4E4E;
+}
+
+.dark .prose p,
+.dark .prose li,
+.dark .prose blockquote,
+.dark .prose strong,
+.dark .prose em,
+.dark .prose a,
+.dark .prose code,
+.dark .prose pre {
+  color: #4E4E4E;
+}
+
+.dark .username,
+.dark .name,
+.dark .author-name {
+  color: #4E4E4E !important;
 }
 
 @-webkit-keyframes spin {

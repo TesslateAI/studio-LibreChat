@@ -164,7 +164,7 @@ class OpenAIClient extends BaseClient {
         this.options.endpointType ?? this.options.endpoint,
         this.options.endpointTokenConfig,
       ) ??
-      4095; // 1 less than maximum
+      32768  ; // 1 less than maximum
 
     if (this.shouldSummarize) {
       this.maxContextTokens = Math.floor(this.maxContextTokens / 2);
@@ -917,7 +917,7 @@ ${convo}
         model,
         this.options.endpointType ?? this.options.endpoint,
         this.options.endpointTokenConfig,
-      ) ?? 4095; // 1 less than maximum
+      ) ?? 32768  ; // 1 less than maximum
 
     // 3 tokens for the assistant label, and 98 for the summarizer prompt (101)
     let promptBuffer = 101;

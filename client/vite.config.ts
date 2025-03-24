@@ -22,6 +22,7 @@ export default defineConfig({
         changeOrigin: true,
       },
     },
+    
   },
   // Set the directory where environment variables are loaded from and restrict prefixes
   envDir: '../',
