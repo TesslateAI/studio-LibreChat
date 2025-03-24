@@ -3,7 +3,7 @@ import { FiBookOpen, FiSearch, FiTerminal, FiZap } from 'react-icons/fi';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import ForgePanel from "./Studio/ForgePanel";
 import PromptLibrary from './Studio/PromptLibrary';
-import GithubModal from './Studio/GithubModal';
+import GitHubModal from './Studio/GitHubModal';
 
 import {
   supportsFiles,
@@ -313,7 +313,7 @@ const ChatForm = ({ index = 0 }) => {
       {showPromptLibrary && <PromptLibrary isOpen={showPromptLibrary} onClose={() => setShowPromptLibrary(false)} />}
       {/* {showDeepResearch && <DeepResearch onClose={() => setShowDeepResearch(false)} />} */}
       {showForgeCLI && <ForgePanel isOpen={showForgeCLI} onClose={() => setShowForgeCLI(false)} />}
-      {showGitHubModal && (<GithubModal showGitHubModal={showGitHubModal}
+      {showGitHubModal && (<GitHubModal showGitHubModal={showGitHubModal}
         setShowGitHubModal={setShowGitHubModal}
         githubRepo={githubRepo}
         setGithubRepo={setGithubRepo}
